@@ -55,4 +55,4 @@ We'll be going back and forth between watching me and doing it yourself.
 
 1.  All content is licensed under a CC­BY­NC­SA 4.0 license.
 1.  All software code is licensed under GNU GPLv3. For commercial use or
-   alternative licensing, please contact legal@ga.co.
+    alternative licensing, please contact legal@ga.co.
