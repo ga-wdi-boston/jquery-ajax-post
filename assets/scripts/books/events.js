@@ -1,7 +1,8 @@
-'use strict';
+'use strict'
 
-const booksApi = require('./api.js');
-const booksUi = require('./ui.js');
+const booksApi = require('./api.js')
+const booksUi = require('./ui.js')
+const getFormFields = require('../../../lib/get-form-fields')
 
 // get in the habit of naming your handlers, it eases debugging.
 //
@@ -9,44 +10,57 @@ const booksUi = require('./ui.js');
 // beginning with 'on' to denote that it is done when the GET /books
 // button is clicked
 const onGetBooks = function (event) {
-  event.preventDefault();
-  let bookId = $('#book-id').val();
+  event.preventDefault()
 
-  if (bookId.length === 0){
-      booksApi.index()
-        .then(booksUi.onSuccess)
-        .catch(booksUi.onError);
-  } else {
-    booksApi.show(bookId)
+  booksApi.index()
+    .then(booksUi.onSuccess)
+    .catch(booksUi.onError)
+}
+
+const onGetBook = function (event) {
+  event.preventDefault()
+  const data = getFormFields(event.target)
+  const book = data.book
+
+  if (book.id.length !== 0) {
+    booksApi.show(book.id)
       .then(booksUi.onSuccess)
-      .catch(booksUi.onError);
+      .catch(booksUi.onError)
+  } else {
+    console.log('Please provide a book id!')
   }
+}
 
-};
+const onUpdateBook = function (event) {
+  event.preventDefault()
+  const data = getFormFields(event.target)
 
-const onDeleteBook = function(event){
-  event.preventDefault();
-  // let bookId = $('#delete-book-id').val();
-  // multiple ways to do everything.
-  // However prefer this way.
+  if (data.book.id.length !== 0) {
+    booksApi.update(data)
+      .then(booksUi.onUpdateSuccess)
+      .catch(booksUi.onError)
+  } else {
+    console.log('Please provide a book id!')
+  }
+}
 
-  let data = getFormFields(event.target);
-  booksApi.destroy(data.book.id)
-    .then(booksUi.onDeleteSuccess)
-    .catch(booksUi.onError);
-};
+const onDeleteBook = function (event) {
+  event.preventDefault()
+  const data = getFormFields(event.target)
+  const book = data.book
 
-const onUpdateBook = function(event){
-  event.preventDefault();
-
-  let data = getFormFields(event.target);
-  booksApi.update(data)
-    .then(booksUi.onUpdateSuccess)
-    .catch(booksUi.onError);
-};
+  if (book.id.length !== 0) {
+    booksApi.destroy(book.id)
+      .then(booksUi.onSuccess)
+      .catch(booksUi.onError)
+  } else {
+    console.log('Please provide a book id!')
+  }
+}
 
 module.exports = {
   onGetBooks,
-  onDeleteBook,
+  onGetBook,
   onUpdateBook,
-};
+  onDeleteBook
+}

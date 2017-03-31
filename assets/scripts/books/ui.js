@@ -1,28 +1,26 @@
-'use strict';
+'use strict'
 
 const onSuccess = function (data) {
-  if (data.book) {
-    console.log(data.book);
+  console.log("data is ", data);
+  if (!data) {
+    console.warn('Either you deleted something, or something went wrong.')
+  } else if (data.book) {
+    console.log(data.book)
   } else {
-    console.table(data.books);
+    console.table(data.books)
   }
-};
-
-const onError = function (response) {
-  console.error(response);
-};
-
-const onDeleteSuccess = function () {
-  console.log('Book was successfully deleted.');
-};
+}
 
 const onUpdateSuccess = function () {
-  console.log('Book was successfully Updated.');
-};
+  console.log("You successfully updated the book!")
+}
+
+const onError = function (response) {
+  console.error(response)
+}
 
 module.exports = {
   onSuccess,
-  onError,
-  onDeleteSuccess,
   onUpdateSuccess,
-};
+  onError
+}
