@@ -19,7 +19,8 @@ const onGetBooks = function (event) {
 
 const onGetBook = function (event) {
   event.preventDefault()
-  const book = getFormFields(event.target).book
+  const data = getFormFields(event.target)
+  const book = data.book
 
   if (book.id.length !== 0) {
     booksApi.show(book.id)
